@@ -34,7 +34,15 @@ class Templates
      */
     public function __construct()
     {
-        if (!isset($GLOBALS['pagenow']) || !in_array($GLOBALS['pagenow'], ['post.php', 'post-new.php'], true)) {
+        global $pagenow;
+
+        if (('post.php' === $pagenow || 'post-new.php' === $pagenow) && \Redux_Enable_Gutenberg::$is_disabled) {
+
+                // We don't want to add templates unless it's a gutenberg page.
+            return;
+        }
+
+        if (! $this->is_gutenberg_page()) {
             return;
         }
 
@@ -53,6 +61,32 @@ class Templates
         }
 
         add_filter('admin_body_class', array( $this, 'add_body_class' ), 999);
+    }
+
+    /**
+     * Is Gutenburg loaded via WordPress core.
+     *
+     * @return bool
+     */
+    public function is_gutenberg_page(): bool
+    {
+        if (function_exists('is_gutenberg_page') && is_gutenberg_page()) {
+            // The Gutenberg plugin is on.
+            return true;
+        }
+
+        if (! function_exists('get_current_screen')) {
+            require_once ABSPATH . '/wp-admin/includes/screen.php';
+        }
+
+        $current_screen = get_current_screen();
+
+        if (isset($current_screen) && method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor()) {
+            // Gutenberg page on 5+.
+            return true;
+        }
+
+        return false;
     }
 
     /**
