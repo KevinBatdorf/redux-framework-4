@@ -27,6 +27,9 @@ define('REDUXTEMPLATES_DIR_PATH', trailingslashit(plugin_dir_path(__FILE__)));
 // Version Check & Include Core.
 if (version_compare(PHP_VERSION, '5.4', '>=') && version_compare(get_bloginfo('version'), '5.4', '>=')) {
     Redux_Functions_Ex::register_class_path('ReduxTemplates', REDUXTEMPLATES_DIR_PATH . 'classes/');
+    add_action('admin_init', function () {
+        new ReduxTemplates\Templates();
+    });
 
     // If they are a pro user, convert their key to use with Extendify
     if (! function_exists('get_userdata')) {
