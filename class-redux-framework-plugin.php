@@ -551,7 +551,6 @@ if ( ! class_exists( 'Redux_Framework_Plugin', false ) ) {
 		public function plugin_metalinks( $links, $file ) {
 			if ( strpos( $file, 'redux-framework.php' ) !== false && is_plugin_active( $file ) ) {
 				$links[] = '<a href="' . esc_url( admin_url( add_query_arg( array( 'page' => 'redux-framework' ), 'tools.php' ) ) ) . '">' . esc_html__( 'What is this?', 'redux-framework' ) . '</a>';
-				$links[] = '<a href="' . esc_url( admin_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ) ) . '#redux_templates=1">' . esc_html__( 'Template Library', 'redux-framework' ) . '</a>';
 			}
 
 			return $links;

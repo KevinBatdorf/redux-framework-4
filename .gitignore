@@ -56,7 +56,6 @@ node_modules
 # Compiled Files and Build Dirs #
 ##########
 /README.html
-/build/
 
 # PhpStrom Project Files #
 .idea/
@@ -73,8 +72,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 */.DS_Store
-build
 */.DS_Store
 
 vendor/*
 local_developer.txt
+
+build/*
+!extendify-sdk/public/build
+!extendify-sdk/public/build/**/*
